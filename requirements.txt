@@ -1,0 +1,8 @@
+streamlit==1.30.0
+pandas==2.1.4
+matplotlib==3.8.2
+numpy==1.26.2
+langchain==0.2.9
+langchain-core==0.2.9
+langchain-ollama==0.1.0
+langgraph==0.2.0

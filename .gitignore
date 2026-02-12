@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+env/
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Временные файлы
+*.tmp
+*.log
+*.pid
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Данные и секреты
+*.csv
+*.xlsx
+.env
+*.png
