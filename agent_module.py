@@ -12,13 +12,14 @@ from langchain_core.messages import HumanMessage
 import os
 import tempfile
 
+# Инициализация модели
 llm = ChatOllama(
     model="llama3.1:8b",
     temperature=0,
-    num_predict=250  # чуть больше для развёрнутых отчётов об аномалиях
+    num_predict=250  
 )
 
-# 2. Инструмент: загрузка CSV
+# Инструмент: загрузка CSV
 @tool
 def load_csv(query: str) -> str:
     """
@@ -60,7 +61,7 @@ def load_csv(query: str) -> str:
     except Exception as e:
         return f"Неизвестная ошибка при загрузке файла '{query}': {type(e).__name__} - {e}"
 
-# 3. Инструмент: статистика
+# Инструмент: статистика
 @tool
 def describe_data(query: str) -> str:
     """
@@ -91,7 +92,7 @@ def describe_data(query: str) -> str:
     except Exception as e:
         return f"Неизвестная ошибка при получении статистики: {type(e).__name__} - {e}"
 
-# 4. Инструмент: график по годам основания магазинов
+# Инструмент: график по годам основания магазинов
 @tool
 def plot_trend(query: str) -> str:
     """
@@ -154,7 +155,7 @@ def plot_trend(query: str) -> str:
     except Exception as e:
         return f"Ошибка при построении графика: {type(e).__name__} - {e}"
 
-# 5. Инструмент: поиск аномалий методом IQR
+# Инструмент: поиск аномалий методом IQR
 @tool
 def find_outliers(query: str) -> str:
     """
@@ -233,7 +234,8 @@ def find_outliers(query: str) -> str:
         return f"Ошибка: файл '{query}' не найден. Проверь путь к файлу."
     except Exception as e:
         return f"Ошибка при поиске аномалий: {type(e).__name__} - {e}"
-    
+
+# Инструмент: Корреляционный анализ
 @tool
 def correlation_analysis(query: str) -> str:
     """
@@ -295,7 +297,7 @@ def correlation_analysis(query: str) -> str:
                 numeric_report = "Сильных корреляций (|коэф| > 0.3) не обнаружено."
         
         # Анализ категориальных переменных
-        categorical_cols = df.select_dtypes(include=['object']).columns.tolist()  # ← Исправлено: .tolist() вместо .to_list()
+        categorical_cols = df.select_dtypes(include=['object']).columns.tolist()
         categorical_cols = [col for col in categorical_cols if df[col].nunique() <= 50]
         
         if not categorical_cols:
@@ -329,7 +331,7 @@ def correlation_analysis(query: str) -> str:
     except Exception as e:
         return f"Ошибка при корреляционном анализе: {type(e).__name__} - {e}"
 
-# Функция инициализации агента (без запуска)
+# Функция инициализации агента
 def create_agent_executor():
     llm = ChatOllama(model="llama3.1:8b", temperature=0, num_predict=250)
     tools = [load_csv, describe_data, plot_trend, find_outliers, correlation_analysis]
